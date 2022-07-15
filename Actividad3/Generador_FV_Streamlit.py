@@ -78,10 +78,10 @@ class Generador_FV:
         self.irrad_temp(d, m, a, h, mi)
         G=df3.at[fecha,'Irradiancia (W/m²)']
         T=df3.at[fecha,'Temperatura (°C)']
-        #print("esto es G ", G)
-        #print("esto es T ", T)
-        potencia_generada=round(self.pot_modelo_GFV(G,T),2)
-        #print("la potencia generada es",potencia_generada)
+        print("esto es G ", G)
+        print("esto es T ", T)
+        potencia_generada=self.pot_modelo_GFV(G,T)
+        print("la potencia generada es",potencia_generada)
         return potencia_generada
 #-----------------------------------------------------------------------------------------------------------------------------------        
     def pot_generada_rango(self,tupla1,tupla2):
@@ -107,14 +107,14 @@ class Generador_FV:
         potenciames=0   
         global potencia 
         potencia=[]
-        if(mes>="01" and mes<="12"):
-          for valor in df3.index:
+        #if(mes>="01" and mes<="12"):
+        for valor in df3.index:
             if(valor.strftime('%m')==mes):
                  cont+=1
                  potencia.append(self.pot_modelo_GFV(df3['Irradiancia (W/m²)'][valor],df3['Temperatura (°C)'][valor]))
                  potenciames= sum(potencia)
-        else:
-            return print ("Debe ingresar un mes valido")
+        #else:
+            #return print ("Debe ingresar un mes valido")
         
         potenciamedia=potenciames/cont
         horas=(cont/144)*24
@@ -204,6 +204,7 @@ class Generador_FV:
         plt.xlabel('Fecha')
         plt.ylabel('Potencia')
         plt.show()
+    
 #-----------------------------------------------------------------------------------------------------------------------------------
     def graficar_energia_mensual(self):
         meses=['01','02','03','04','05','07','08','09','10','11','12']
@@ -261,21 +262,21 @@ gen = Generador_FV(df3, 500, 260, 0.85, -0.0042)
 
 
 if __name__=='__main__':
-    gen.irrad_temp ('01', '01', '2019', '00', '20')
-    gen.irrad_temp_rango(('01', '01', '2019', '00', '10'), ('01', '01', '2019', '02', '10'))
-    gen.pot_modelo_GFV(635,32.5)
-    gen.pot_generada(('01', '07', '2019', '10', '00'))
-    gen.pot_generada_rango(('01', '07', '2019', '10', '00'), ('01', '07', '2019', '10', '50')) 
-    gen.pot_media_mes('02')
-    gen.pot_media_anual()
-    gen.energia_mes('02')
-    gen.energia_anual()
-    gen.factor_de_utilizacion()
-    gen.max_energia_mes()
-    gen.max_pot_mes()
-    gen.graficar_pot_rango(('01', '07', '2019', '10', '00'), ('01', '07', '2019', '10', '50'))
-    gen.graficar_energia_mensual()   
-    gen.graficar_meses(('01','03','04','07'))
+    #gen.irrad_temp ('01', '01', '2019', '00', '20')
+    gen.irrad_temp_rango(('01', '01', '2019', '00', '0'), ('02', '01', '2019', '02', '10'))
+    #gen.pot_modelo_GFV(635,32.5)
+    # gen.pot_generada(('01', '07', '2019', '10', '00'))
+    # gen.pot_generada_rango(('01', '07', '2019', '10', '00'), ('01', '07', '2019', '10', '50')) 
+    # gen.pot_media_mes('02')
+    # gen.pot_media_anual()
+    # gen.energia_mes('02')
+    # gen.energia_anual()
+    # gen.factor_de_utilizacion()
+    # gen.max_energia_mes()
+    # gen.max_pot_mes()
+    # gen.graficar_pot_rango(('01', '07', '2019', '10', '00'), ('01', '07', '2019', '10', '50'))
+    # gen.graficar_energia_mensual()   
+    # gen.graficar_meses(('01','03','04','07'))
     
     #Instancias de Generador_FV_Sta_Fe 
     #gen_UTN.irrad_temp ('01', '01', '2019', '00', '20')
